@@ -33,28 +33,3 @@ export const getQuizHistory = async () => {
     const db = await initDB();
     return db.getAll(HISTORY_STORE);
 };
-
-export const saveQuizProgress = async (progress: {
-    id: string;
-    currentQuestion: number;
-    userResponses: { question: string; selected: string | null; correct: string }[];
-    timeLeft: number
-}) => {
-    const db = await initDB();
-    const tx = db.transaction(PROGRESS_STORE, "readwrite");
-    await tx.objectStore(PROGRESS_STORE).put(progress);
-};
-
-export const getQuizProgress = async (): Promise<{
-    currentQuestion: number;
-    userResponses: { question: string; selected: string | null; correct: string }[];
-    timeLeft: number
-} | null> => {
-    const db = await initDB();
-    return db.get(PROGRESS_STORE, "progress") ?? null;
-};
-
-export const clearQuizProgress = async () => {
-    const db = await initDB();
-    await db.delete(PROGRESS_STORE, "progress");
-};
