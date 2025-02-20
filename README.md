@@ -1,50 +1,46 @@
-# React + TypeScript + Vite
+# Features
+<ul>
+  <li>✅ Multiple-choice & text-based questions</li>
+  <li>✅ Timer for each question</li>
+  <li>✅ Instant feedback on answers</li>
+  <li>✅ Stores quiz attempts in IndexedDB</li>
+  <li>✅ Allow Multiple Attempts</li>
+  <li>✅ Show attempt history</li>
+  <li>✅ Scoreboard after Final Submittion</li>
+  <li>✅ Responsive UI</li>
+</ul>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Tech Stack
+<ul>
+  <li>Frontend: React, TypeScript, Tailwind CSS</li>
+  <li>Database: IndexedDB for storing quiz attempts and Showing Histroy</li>
+</ul>
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+# Installation & Setup
+## Clone the Repository
+```bash
+git clone https://github.com/shwetkamal-gaud/quiz-app.git
+```
+## Change the Directory
+```bash
+cd quiz-app
+```
+## Install Dependencies
+```bash
+npm install
+```
+## Run the Development Server
+```bash
+npm run dev
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+# Usage
+<ol>
+  <li>Enter your name or quiz name and start the quiz.</li>
+  <li>Answer the questions before the timer runs out.</li>
+  <li>Receive instant feedback on your answers.</li>
+  <li>At the last question, a confirmation modal will appear before submitting.</li>
+  <li>View your score at the end.</li>
+  <li>View your Attempt History on History Page by clicking on History Tab</li>
+</ol>
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
