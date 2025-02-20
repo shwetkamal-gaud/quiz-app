@@ -67,16 +67,22 @@ const Navbar = () => {
             </div>
 
             {menuOpen && (
-                <div className="sm:hidden" id="mobile-menu">
-                    <div className="space-y-1 px-2 pt-2 pb-3">
-                        {navbar.map((item) => {
-                            return (
-                                <Link key={item.id} to={item.link} className={`block rounded-md  px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-700 hover:text-white${location.pathname === item.link && 'bg-gray-900 text-white'}`}>
-                                    {item.name}
-                                </Link>
-                            )
-                        })}
-                       
+                <div
+                    className="fixed inset-0   z-40"
+                    onClick={() => setMenuOpen(false)} // Clicking outside closes menu
+                >
+                    <div className="absolute top-16 left-0 w-full bg-white shadow-lg py-4 flex flex-col items-start space-y-2">
+                        {navbar.map((item) => (
+                            <Link
+                                key={item.id}
+                                to={item.link}
+                                className={`w-full px-5 py-2 text-sm font-medium text-blue ${location.pathname === item.link ? "bg-blue-500 text-white" : ""
+                                    }`}
+                                onClick={() => setMenuOpen(false)}
+                            >
+                                {item.name}
+                            </Link>
+                        ))}
                     </div>
                 </div>
             )}

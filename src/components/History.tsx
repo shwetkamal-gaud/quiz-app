@@ -14,7 +14,7 @@ const History = () => {
     useEffect(() => {
         const fetchHistory = async () => {
             const data = await getQuizHistory();
-            setHistory(data.reverse()); 
+            setHistory(data.reverse());
         };
         fetchHistory();
     }, []);
@@ -25,26 +25,28 @@ const History = () => {
             {history.length === 0 ? (
                 <p>No quiz attempts yet.</p>
             ) : (
-                <table className="w-full border-collapse border border-gray-300">
-                    <thead>
-                        <tr className="bg-gray-200">
-                            <th className="border p-2">Name</th>
-                            <th className="border p-2">Score</th>
-                            <th className="border p-2">Time Taken (seconds)</th>
-                            <th className="border p-2">Attempt Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {history.map((attempt, index) => (
-                            <tr key={index} className="text-center">
-                                <td className="border p-2">{attempt.quizName}</td>
-                                <td className="border p-2">{attempt.score}</td>
-                                <td className="border p-2">{attempt.timeTaken}s</td>
-                                <td className="border p-2">{new Date(attempt.date).toLocaleString()}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                    <div className="relative max-h-[80vh] overflow-auto shadow-md sm:rounded-lg">
+                        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                            <thead className="text-xs text-gray-700 uppercase dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" className="px-6 py-3 bg-gray-50 dark:bg-gray-800">Name</th>
+                                    <th scope="col" className="px-6 py-3">Score</th>
+                                    <th scope="col" className="px-6 py-3 bg-gray-50 dark:bg-gray-800">Time Taken (seconds)</th>
+                                    <th scope="col" className="px-6 py-3">Attempted Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {history.map((attempt, index) => (
+                                    <tr key={index} className="border-b border-gray-200 dark:border-gray-700">
+                                        <td className="px-6 py-4">{attempt.quizName}</td>
+                                        <td className="px-6 py-4">{attempt.score}</td>
+                                        <td className="px-6 py-4">{attempt.timeTaken?.toFixed(2)}s</td>
+                                        <td className="px-6 py-4">{new Date(attempt.date).toLocaleString()}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
             )}
         </div>
     );
