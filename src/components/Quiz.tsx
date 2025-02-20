@@ -131,7 +131,7 @@ const Quiz = () => {
                         <div className="flex flex-col gap-4">
                             <div className="flex justify-between items-center">
 
-                                <h2 className="text-2xl">{questions[currentQuestion].question}</h2>
+                                <h2 className="text-2xl">{`${currentQuestion+1}.${questions[currentQuestion].question}`}</h2>
                                 <div className="text-red-500 text-lg font-bold">
                                     ⏳ Time Left: {formatTime(timeLeft)}
                                 </div>
