@@ -18,6 +18,7 @@ const Quiz = () => {
     const [show, setShow] = useState(false);
     const [timeLeft, setTimeLeft] = useState(TOTAL_TIME);
     const [name, setName] = useState("");
+    const [isAnswered, setIsAnswered] = useState(false)
 
     useEffect(() => {
         if (isQuiz && !completed) {
@@ -28,6 +29,7 @@ const Quiz = () => {
                     if (prev <= 1) {
                         clearInterval(interval);
                         handleAnswer();
+                        handleNext()
                         return 0;
                     }
                     return prev - 1;
@@ -58,15 +60,17 @@ const Quiz = () => {
         });
         const questionTimeTaken = startTime ? (Date.now() - startTime) / 1000 : 0;
         setTimeTaken(prev => prev + questionTimeTaken);
-
+        if (optionValue.length <= 0 && timeLeft > 0) {
+            setErr("Please Select or Enter Answer")
+        }
         if (currentQuestion + 1 < questions.length) {
-            setCurrentQuestion(currentQuestion + 1);
-            setOptionValue("");
-            setErr("");
-            setTimeLeft(TOTAL_TIME);
-            setStartTime(Date.now());
+
+
         } else {
             setShow(true);
+        }
+        if (timeLeft > 0) {
+            setIsAnswered(true)
         }
     };
     const handleSubmit = () => {
@@ -86,6 +90,17 @@ const Quiz = () => {
         setShow(false);
     };
 
+    const handleNext = () => {
+        if (currentQuestion + 1 < questions.length) {
+            setCurrentQuestion(currentQuestion + 1);
+            setOptionValue("");
+            setErr("");
+            setTimeLeft(TOTAL_TIME);
+            setStartTime(Date.now());
+            setIsAnswered(false);
+        }
+    }
+
     const reAttempt = () => {
         setIsQuiz(false)
         setCompleted(false)
@@ -96,6 +111,7 @@ const Quiz = () => {
         setTimeLeft(TOTAL_TIME)
         setName('')
         setStartTime(null)
+        setIsAnswered(false)
     }
     return (
         <div className="flex justify-center w-[100%] h-full px-3">
@@ -122,30 +138,52 @@ const Quiz = () => {
                             </div>
 
                             <div className="flex flex-col gap-3">
-                                {questions[currentQuestion].options.map((option) => (
-                                    <div key={option} className="flex gap-1 items-center">
-                                        <input
-                                            id={option}
-                                            value={option}
-                                            onChange={(e) => {
-                                                setOptionValue(e.target.value);
-                                                setErr("");
-                                            }}
-                                            checked={option === optionValue}
-                                            type="radio"
-                                        />
-                                        <label htmlFor={option}>{option}</label>
-                                    </div>
-                                ))}
+                                {questions[currentQuestion].isOption && questions[currentQuestion].options ? (
+
+                                    questions[currentQuestion]?.options.map((option) => (
+                                        <div key={option} className="flex gap-1 items-center">
+                                            <input
+                                                id={option}
+                                                value={option}
+                                                disabled={isAnswered}
+                                                onChange={(e) => {
+                                                    setOptionValue(e.target.value);
+                                                    setErr("");
+                                                }}
+                                                checked={option === optionValue}
+                                                type="radio"
+                                            />
+                                            <label htmlFor={option}>{option}</label>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <input
+                                        type="text"
+                                        value={optionValue}
+                                        disabled={isAnswered}
+                                        onChange={(e) => setOptionValue(e.target.value)}
+                                        placeholder="Enter your answer"
+                                        className="p-2 border border-gray-300 rounded-md"
+                                    />
+                                )}
                             </div>
+
                             {err.length > 0 && <span className="text-red-500">{err}</span>}
+                            {isAnswered && (
+                                <p className={`font-semibold ${userAnswers[currentQuestion]?.correct === userAnswers[currentQuestion]?.selected ? "text-green-500" : "text-red-500"}`}>
+                                    {userAnswers[currentQuestion]?.correct === userAnswers[currentQuestion]?.selected ? "✅ Correct Answer!" : "❌ Incorrect. The correct answer is: " + questions[currentQuestion].correct}
+                                </p>
+                            )}
                             <div className="flex gap-2 text-white">
-                                <button className="bg-blue-500 rounded-lg px-2 py-1" disabled={optionValue.length === 0} onClick={() => setOptionValue("")}>
+                                <button className="bg-blue-500 rounded-lg px-2 py-1" disabled={optionValue.length === 0 || isAnswered} onClick={() => setOptionValue("")}>
                                     Reset
                                 </button>
                                 <button onClick={() => handleAnswer()} className="bg-blue-500 rounded-lg px-2 py-1">
                                     Submit
                                 </button>
+                                {currentQuestion + 1 < questions.length && <button onClick={() => handleNext()} className="bg-blue-500 rounded-lg px-2 py-1">
+                                    Next
+                                </button>}
                             </div>
                         </div>
                     )}

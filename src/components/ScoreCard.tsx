@@ -10,7 +10,7 @@ const ScoreCard = ({ userAnswers, timeTaken, reAttempt }: ScoreCardProps) => {
     const incorrectAnswers = userAnswers.filter((ans) => ans.selected !== ans.correct && ans.selected !== null).length;
     const unattempted = userAnswers.filter((ans) => ans.selected === null || ans.selected === '').length;
     return (
-        <div className="overflwo-auto flex flex-col gap-1 border-blue-200 rounded-lg">
+        <div className="overflwo-auto flex flex-col gap-1  border-blue-200 rounded-lg">
             <h2 className="text-2xl font-bold">Quiz Scorecard</h2>
             <p className="text-lg">📊 <strong>Score:</strong> {correctAnswers} / {totalQuestions}</p>
             <p className="text-lg">✅ <strong>Correct Answers:</strong> {correctAnswers}</p>
