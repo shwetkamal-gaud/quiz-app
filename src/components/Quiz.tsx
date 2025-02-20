@@ -58,21 +58,21 @@ const Quiz = () => {
                 }
             ];
         });
+
         const questionTimeTaken = startTime ? (Date.now() - startTime) / 1000 : 0;
-        setTimeTaken(prev => prev + questionTimeTaken);
-        if (optionValue.length <= 0 && timeLeft > 0) {
-            setErr("Please Select or Enter Answer")
-        }
-        if (currentQuestion + 1 < questions.length) {
+        setTimeTaken((prev) => prev + questionTimeTaken);
 
-
-        } else {
+        if (!(currentQuestion + 1 < questions.length)) {
             setShow(true);
         }
-        if (timeLeft > 0) {
-            setIsAnswered(true)
+
+        if (timeLeft > 0 && optionValue.length > 0) {
+            setIsAnswered(true);
+            setErr("");
         }
     };
+
+
     const handleSubmit = () => {
         setCompleted(true);
 
@@ -112,7 +112,9 @@ const Quiz = () => {
         setName('')
         setStartTime(null)
         setIsAnswered(false)
+        setErr('')
     }
+
     return (
         <div className="flex justify-center w-[100%] h-full px-3">
             {!isQuiz ? (
@@ -131,7 +133,7 @@ const Quiz = () => {
                         <div className="flex flex-col gap-4">
                             <div className="flex justify-between items-center">
 
-                                <h2 className="text-2xl">{`${currentQuestion+1}.${questions[currentQuestion].question}`}</h2>
+                                <h2 className="text-2xl">{`${currentQuestion + 1}.${questions[currentQuestion].question}`}</h2>
                                 <div className="text-red-500 text-lg font-bold">
                                     ⏳ Time Left: {formatTime(timeLeft)}
                                 </div>
@@ -161,7 +163,7 @@ const Quiz = () => {
                                         type="text"
                                         value={optionValue}
                                         disabled={isAnswered}
-                                        onChange={(e) => setOptionValue(e.target.value)}
+                                        onChange={(e) => { setOptionValue(e.target.value); setErr('') }}
                                         placeholder="Enter your answer"
                                         className="p-2 border border-gray-300 rounded-md"
                                     />
@@ -175,13 +177,13 @@ const Quiz = () => {
                                 </p>
                             )}
                             <div className="flex gap-2 text-white">
-                                <button className="bg-blue-500 rounded-lg px-2 py-1" disabled={optionValue.length === 0 || isAnswered} onClick={() => setOptionValue("")}>
+                                        <button className={optionValue.length === 0 || isAnswered ?'bg-gray-500 rounded-lg px-2 py-1':"bg-blue-500 rounded-lg px-2 py-1"} disabled={optionValue.length === 0 || isAnswered} onClick={() => setOptionValue("")}>
                                     Reset
                                 </button>
-                                <button onClick={() => handleAnswer()} className="bg-blue-500 rounded-lg px-2 py-1">
+                                        <button disabled={optionValue.length === 0} onClick={() => handleAnswer()} className={optionValue.length === 0 ?'bg-gray-500 rounded-lg px-2 py-1' : `bg-blue-500 rounded-lg px-2 py-1`}>
                                     Submit
                                 </button>
-                                {currentQuestion + 1 < questions.length && <button disabled={isAnswered} onClick={() => handleNext()} className="bg-blue-500 rounded-lg px-2 py-1">
+                                        {currentQuestion + 1 < questions.length && <button disabled={!isAnswered} onClick={() => handleNext()} className={isAnswered ? "bg-blue-500 rounded-lg px-2 py-1" :'bg-gray-500 rounded-lg px-2 py-1'}>
                                     Next
                                 </button>}
                             </div>
