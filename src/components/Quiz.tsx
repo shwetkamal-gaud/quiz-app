@@ -181,7 +181,7 @@ const Quiz = () => {
                                 <button onClick={() => handleAnswer()} className="bg-blue-500 rounded-lg px-2 py-1">
                                     Submit
                                 </button>
-                                {currentQuestion + 1 < questions.length && <button onClick={() => handleNext()} className="bg-blue-500 rounded-lg px-2 py-1">
+                                {currentQuestion + 1 < questions.length && <button disabled={isAnswered} onClick={() => handleNext()} className="bg-blue-500 rounded-lg px-2 py-1">
                                     Next
                                 </button>}
                             </div>
