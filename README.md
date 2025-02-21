@@ -44,3 +44,9 @@ npm run dev
   <li>View your Attempt History on History Page by clicking on History Tab</li>
 </ol>
 
+## Deployed Link
+```bash
+https://quiz-app-sigma-mocha.vercel.app/
+```
+
+## Thank you for considering my application. I look forward to the next steps.
