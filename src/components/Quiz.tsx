@@ -81,7 +81,7 @@ const Quiz = () => {
         const correctAnswers = userAnswers.filter(ans => ans.selected === ans.correct).length;
 
         saveQuizAttempt({
-            quizName: "Sample Quiz",
+            quizName: name,
             score: correctAnswers,
             date: new Date().toISOString(),
             timeTaken: finalTimeTaken
